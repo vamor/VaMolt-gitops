@@ -1,7 +1,7 @@
 apiVersion: argoproj.io/v1alpha1
 kind: Application
 metadata:
-  name: vamolt-api
+  name: vamolt-api-prod
   namespace: argocd
 spec:
   project: default
@@ -19,7 +19,7 @@ spec:
           value: "sha-61c1a5a"   # <-- CI zet hier de nieuwe sha
   destination:
     server: https://kubernetes.default.svc
-    namespace: vamolt
+    namespace: vamolt-prod
   syncPolicy:
     automated: {}                 # optioneel; haal weg als je nog niet auto-synct
     syncOptions:
