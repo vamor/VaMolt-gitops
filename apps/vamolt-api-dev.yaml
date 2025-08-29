@@ -1,0 +1,26 @@
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  name: vamolt-api-dev
+  namespace: argocd
+spec:
+  project: default
+  source:
+    repoURL: https://github.com/vamor/vamolt
+    targetRevision: main
+    path: charts/vamolt-api
+    helm:
+      valueFiles:
+        - values/vamolt-api-values.yaml   # base values living in the chart (optional)
+        # env overlay from THIS repo:
+        - https://github.com/vamor/vamolt-gitops//values/dev/vamolt-api-values.yaml
+      parameters:
+        - name: image.tag
+          value: "sha-61c1a5a"   # <-- CI zet hier de nieuwe sha
+  destination:
+    server: https://kubernetes.default.svc
+    namespace: vamolt-dev
+  syncPolicy:
+    automated: {}                 # optioneel; haal weg als je nog niet auto-synct
+    syncOptions:
+      - CreateNamespace=true
