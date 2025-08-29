@@ -1,0 +1,28 @@
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  name: vamolt-root
+  namespace: argocd
+spec:
+  project: default
+
+  # Bron: jouw GitOps repo (publiek)
+  source:
+    repoURL: https://github.com/vamor/vamolt-gitops
+    targetRevision: main
+    path: apps
+    directory:
+      recurse: true     # lees alle YAML's recursief in deze map
+
+  # Bestemming: de Application CR's worden in de argocd-namespace gemaakt
+  destination:
+    server: https://kubernetes.default.svc
+    namespace: argocd
+
+  # Sync-beleid voor de root (hoe de child App-bestanden worden beheerd)
+  syncPolicy:
+    automated:          # laat Argo CD automatisch syncen
+      prune: true       # verwijder resources die niet meer in Git staan
+      selfHeal: true    # herstel drift als iemand in de cluster iets handmatig wijzigt
+    syncOptions:
+      - CreateNamespace=true
