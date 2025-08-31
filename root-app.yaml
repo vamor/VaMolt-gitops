@@ -20,9 +20,9 @@ spec:
     namespace: argocd
 
   # Sync-beleid voor de root (hoe de child App-bestanden worden beheerd)
-  syncPolicy:
-    automated:          # laat Argo CD automatisch syncen
-      prune: true       # verwijder resources die niet meer in Git staan
-      selfHeal: true    # herstel drift als iemand in de cluster iets handmatig wijzigt
-    syncOptions:
-      - CreateNamespace=true
+  #syncPolicy:
+  #  automated:          # laat Argo CD automatisch syncen
+  #    prune: true       # verwijder resources die niet meer in Git staan
+  #    selfHeal: true    # herstel drift als iemand in de cluster iets handmatig wijzigt
+  #  syncOptions:
+  #    - CreateNamespace=true

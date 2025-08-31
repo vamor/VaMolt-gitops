@@ -11,16 +11,10 @@ spec:
     path: charts/vamolt-api
     helm:
       valueFiles:
-        - values/vamolt-api-values.yaml   # base values living in the chart (optional)
-        # env overlay from THIS repo:
-        - https://github.com/vamor/vamolt-gitops//values/dev/vamolt-api-values.yaml
-      parameters:
-        - name: image.tag
-          value: "sha-61c1a5a"   # <-- CI zet hier de nieuwe sha
+        - https://raw.githubusercontent.com/vamor/VaMolt-gitops/main/values/dev/vamolt-api-values.yaml
   destination:
     server: https://kubernetes.default.svc
     namespace: vamolt-dev
   syncPolicy:
-    automated: {}                 # optioneel; haal weg als je nog niet auto-synct
     syncOptions:
       - CreateNamespace=true
