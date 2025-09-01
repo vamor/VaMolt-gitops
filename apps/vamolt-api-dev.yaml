@@ -6,15 +6,16 @@ metadata:
 spec:
   project: default
   source:
-    repoURL: https://github.com/vamor/vamolt
+    repoURL: https://github.com/vamor/VaMolt-gitops.git
     targetRevision: main
-    path: charts/vamolt-api
+    path: apps/vamolt-api
     helm:
       valueFiles:
-        - https://raw.githubusercontent.com/vamor/VaMolt-gitops/main/values/dev/vamolt-api-values.yaml
+        - values/dev/vamolt-api-values.yaml
   destination:
     server: https://kubernetes.default.svc
-    namespace: vamolt-dev
+    namespace: dev
   syncPolicy:
-    syncOptions:
-      - CreateNamespace=true
+    automated:
+      prune: true
+      selfHeal: true

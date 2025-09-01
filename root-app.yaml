@@ -1,28 +1,51 @@
 apiVersion: argoproj.io/v1alpha1
 kind: Application
 metadata:
-  name: vamolt-root
+  name: vamolt-api-dev
   namespace: argocd
 spec:
   project: default
-
-  # Bron: jouw GitOps repo (publiek)
-  source:
-    repoURL: https://github.com/vamor/vamolt-gitops
-    targetRevision: main
-    path: apps
-    directory:
-      recurse: true     # lees alle YAML's recursief in deze map
-
-  # Bestemming: de Application CR's worden in de argocd-namespace gemaakt
+  sources:
+    # 1) Helm chart uit de APP-repo
+    - repoURL: https://github.com/vamor/vamolt.git
+      targetRevision: main
+      path: charts/vamolt-api
+    # 2) Values uit de GITOPS-repo (met ref 'values')
+    - repoURL: https://github.com/vamor/VaMolt-gitops.git
+      targetRevision: main
+      ref: values
   destination:
     server: https://kubernetes.default.svc
-    namespace: argocd
+    namespace: dev
+  source:
+    helm:
+      valueFiles:
+        - $values/values/dev/vamolt-api-values.yaml
+  syncPolicy:
+    automated:
+      prune: true
+      selfHeal: true
 
-  # Sync-beleid voor de root (hoe de child App-bestanden worden beheerd)
-  #syncPolicy:
-  #  automated:          # laat Argo CD automatisch syncen
-  #    prune: true       # verwijder resources die niet meer in Git staan
-  #    selfHeal: true    # herstel drift als iemand in de cluster iets handmatig wijzigt
-  #  syncOptions:
-  #    - CreateNamespace=true
+---
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  name: vamolt-api-prod
+  namespace: argocd
+spec:
+  project: default
+  sources:
+    - repoURL: https://github.com/vamor/vamolt.git
+      targetRevision: main
+      path: charts/vamolt-api
+    - repoURL: https://github.com/vamor/VaMolt-gitops.git
+      targetRevision: main
+      ref: values
+  destination:
+    server: https://kubernetes.default.svc
+    namespace: prod
+  source:
+    helm:
+      valueFiles:
+        - $values/values/prod/vamolt-api-values.yaml
+  syncPolicy: {}  # géén automated sync voor prod
