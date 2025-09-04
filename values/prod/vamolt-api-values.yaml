@@ -2,6 +2,9 @@ image:
   repository: ghcr.io/vamor/vamolt-api
   tag: "sha-61c1a5a"
 
+imagePullSecrets:
+  - name: ghcr-pull
+
 replicaCount: 3
 service:
   type: ClusterIP

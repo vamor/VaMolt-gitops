@@ -5,26 +5,22 @@ metadata:
   namespace: argocd
 spec:
   project: default
-  sources:
-    - repoURL: https://github.com/vamor/vamolt.git
-      targetRevision: main
-      path: charts/vamolt-api
-    - repoURL: https://github.com/vamor/VaMolt-gitops.git
-      targetRevision: main
-      ref: values
+  source:
+    repoURL: https://github.com/vamor/vamolt.git
+    targetRevision: main
+    path: charts/vamolt-api
+    helm:
+      valueFiles:
+        - https://raw.githubusercontent.com/vamor/VaMolt-gitops/master/values/dev/vamolt-api-values.yaml
   destination:
     server: https://kubernetes.default.svc
     namespace: dev
-  source:
-    helm:
-      valueFiles:
-        - $values/values/dev/vamolt-api-values.yaml
   syncPolicy:
     automated:
       prune: true
       selfHeal: true
     syncOptions:
-      - CreateNamespace=true    
+      - CreateNamespace=true
 ---
 apiVersion: argoproj.io/v1alpha1
 kind: Application
@@ -33,18 +29,14 @@ metadata:
   namespace: argocd
 spec:
   project: default
-  sources:
-    - repoURL: https://github.com/vamor/vamolt.git
-      targetRevision: main
-      path: charts/vamolt-api
-    - repoURL: https://github.com/vamor/VaMolt-gitops.git
-      targetRevision: main
-      ref: values
+  source:
+    repoURL: https://github.com/vamor/vamolt.git
+    targetRevision: main
+    path: charts/vamolt-api
+    helm:
+      valueFiles:
+        - https://raw.githubusercontent.com/vamor/VaMolt-gitops/master/values/prod/vamolt-api-values.yaml
   destination:
     server: https://kubernetes.default.svc
     namespace: prod
-  source:
-    helm:
-      valueFiles:
-        - $values/values/prod/vamolt-api-values.yaml
   syncPolicy: {}  # geen automated sync in prod
