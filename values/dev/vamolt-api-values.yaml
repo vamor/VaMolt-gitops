@@ -1,6 +1,6 @@
 image:
   repository: ghcr.io/vamor/vamolt-api
-  tag: "sha-61c1a5a"
+  tag: "sha-42a45de597a791e8061bb51a5ea8da29ecc4a917"
 
 replicaCount: 1
 service:
