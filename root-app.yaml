@@ -6,11 +6,9 @@ metadata:
 spec:
   project: default
   sources:
-    # 1) Helm chart uit de APP-repo
     - repoURL: https://github.com/vamor/vamolt.git
       targetRevision: main
       path: charts/vamolt-api
-    # 2) Values uit de GITOPS-repo (met ref 'values')
     - repoURL: https://github.com/vamor/VaMolt-gitops.git
       targetRevision: main
       ref: values
@@ -25,7 +23,8 @@ spec:
     automated:
       prune: true
       selfHeal: true
-
+    syncOptions:
+      - CreateNamespace=true    
 ---
 apiVersion: argoproj.io/v1alpha1
 kind: Application
@@ -48,4 +47,4 @@ spec:
     helm:
       valueFiles:
         - $values/values/prod/vamolt-api-values.yaml
-  syncPolicy: {}  # géén automated sync voor prod
+  syncPolicy: {}  # geen automated sync in prod
