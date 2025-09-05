@@ -11,7 +11,7 @@ spec:
     path: charts/vamolt-api
     helm:
       valueFiles:
-        - https://raw.githubusercontent.com/vamor/VaMolt-gitops/master/values/dev/vamolt-api-values.yaml
+        - https://raw.githubusercontent.com/vamor/VaMolt-gitops/3cd9d69/values/dev/vamolt-api-values.yaml
   destination:
     server: https://kubernetes.default.svc
     namespace: dev

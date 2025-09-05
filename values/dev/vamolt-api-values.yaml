@@ -2,3 +2,5 @@ image:
   repository: ghcr.io/vamor/vamolt-api
   tag: "sha-61c1a5a"
 replicaCount: 1
+imagePullSecrets:
+   - name: ghcr-pull
