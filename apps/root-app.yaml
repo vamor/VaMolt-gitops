@@ -1,0 +1,18 @@
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  name: vamolt-root
+  namespace: argocd
+spec:
+  project: default
+  source:
+    repoURL: https://github.com/vamor/VaMolt-gitops.git
+    targetRevision: main
+    path: apps   # map in je repo waar dev/prod-apps gedefinieerd zijn
+  destination:
+    server: https://kubernetes.default.svc
+    namespace: argocd
+  syncPolicy:
+    automated:
+      prune: true
+      selfHeal: true
