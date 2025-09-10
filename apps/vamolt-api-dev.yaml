@@ -10,7 +10,7 @@ spec:
     namespace: vamolt-dev
   sources:
     - repoURL: https://github.com/vamor/vamolt.git
-      targetRevision: main        # of 'master' als jouw app-repo zo heet
+      targetRevision: master        # of 'master' als jouw app-repo zo heet
       path: charts/vamolt-api
       helm:
         valueFiles:
