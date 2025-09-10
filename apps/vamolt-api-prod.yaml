@@ -10,7 +10,7 @@ spec:
     namespace: vamolt-prod
   source:
     repoURL: https://github.com/vamor/VaMolt-gitops.git
-    targetRevision: main
+    targetRevision: master
     path: charts/vamolt-api
     helm:
       valueFiles:
