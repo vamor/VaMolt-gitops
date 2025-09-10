@@ -3,7 +3,7 @@ image:
   tag: "sha-61c1a5a"
 
 imagePullSecrets:
-  - name: ghcr-pull
+  - name: ghcr-creds
 
 replicaCount: 3
 service:
