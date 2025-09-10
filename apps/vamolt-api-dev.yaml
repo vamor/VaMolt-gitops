@@ -1,17 +1,20 @@
 apiVersion: argoproj.io/v1alpha1
 kind: Application
 metadata:
-  name: vamolt-root
+  name: vamolt-api-dev
   namespace: argocd
 spec:
   project: default
+  destination:
+    server: https://kubernetes.default.svc
+    namespace: vamolt-dev
   source:
     repoURL: https://github.com/vamor/VaMolt-gitops.git
     targetRevision: main
-    path: apps
-  destination:
-    server: https://kubernetes.default.svc
-    namespace: argocd
+    path: charts/vamolt-api
+    helm:
+      valueFiles:
+        - values/dev/vamolt-api-values.yaml
   syncPolicy:
     automated:
       prune: true
