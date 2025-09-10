@@ -16,5 +16,3 @@ spec:
       valueFiles:
         - values/prod/vamolt-api-values.yaml
   syncPolicy: {}
-  syncOptions:
-    - CreateNamespace=true
