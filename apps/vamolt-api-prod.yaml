@@ -8,11 +8,14 @@ spec:
   destination:
     server: https://kubernetes.default.svc
     namespace: vamolt-prod
-  source:
-    repoURL: https://github.com/vamor/VaMolt-gitops.git
-    targetRevision: master
-    path: charts/vamolt-api
-    helm:
-      valueFiles:
-        - values/prod/vamolt-api-values.yaml
+  sources:
+    - repoURL: https://github.com/vamor/vamolt.git
+      targetRevision: main        # of 'master' in app-repo
+      path: charts/vamolt-api
+      helm:
+        valueFiles:
+          - $values/values/prod/vamolt-api-values.yaml
+    - repoURL: https://github.com/vamor/VaMolt-gitops.git
+      targetRevision: master
+      ref: values
   syncPolicy: {}
