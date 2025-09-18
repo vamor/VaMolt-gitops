@@ -6,12 +6,15 @@ imagePullSecrets:
   - name: ghcr-creds
 
 replicaCount: 3
+
 service:
   type: ClusterIP
   port: 80
   targetPort: 8080
+
 container:
   port: 8080
+
 resources:
   requests:
     cpu: 100m
@@ -19,3 +22,15 @@ resources:
   limits:
     cpu: 500m
     memory: 512Mi
+
+# ---- Ingress (Traefik / K3s) ----
+ingress:
+  enabled: true
+  className: traefik
+  annotations: {}
+  hosts:
+    - host: api.vamolt.local
+      paths:
+        - path: /
+          pathType: Prefix
+  tls: []   # geen TLS (lokaal via hosts-file)
